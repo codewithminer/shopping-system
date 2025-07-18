@@ -9,4 +9,17 @@ class Payment extends Model
 {
     /** @use HasFactory<\Database\Factories\PaymentFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'order_id',
+        'transaction_id',
+        'amount',
+        'status',
+        'payment_gateway_details'
+    ];
+
+    protected $casts = [
+        'payment_gateway_details' => 'array',
+        'amount' => 'decimal:2',
+    ];
 }

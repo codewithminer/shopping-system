@@ -9,4 +9,10 @@ class OrderItem extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderItemFactory> */
     use HasFactory;
+
+    protected $fillable = ['order_id', 'product_id', 'quantity', 'price_at_purchase'];
+
+    protected $casts = [
+        'price_at_purchase' => 'decimal:2',
+    ];
 }
