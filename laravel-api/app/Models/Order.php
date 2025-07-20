@@ -74,7 +74,7 @@ class Order extends Model
                     ->withPivot('quantity', 'price_at_purchase')
                     ->withTimestamps();
     }
-
+    
     /**
      * Get all of the payments for the Order.
      * An Order can have many Payments (e.g., multiple attempts).
