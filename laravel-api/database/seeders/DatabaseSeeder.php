@@ -47,19 +47,19 @@ class DatabaseSeeder extends Seeder
         // 2. Create Categories & Products
         $this->command->info('Seeding Categories and Products...');
         $categories = Category::factory(5)->create();
-        $products = Product::factory(50)->recycle($categories)->create();
+        $products = Product::factory(50)->recycle($categories)->create();//recycle() tells the factory: "For the category_id, don't create a new one. Instead, randomly pick one from the existing 
 
         // 3. Create Orders, OrderItems, and Payments
         $this->command->info('Seeding Orders, Order Items, and Payments...');
         foreach ($allUsers as $user) {
             Order::factory(rand(1, 5))->create(['user_id' => $user->id])->each(function (Order $order) use ($products) {
                 $productsToAttach = $products->random(rand(1, 4));
-                $totalAmount = 0;
+                $totalPrice = 0;
 
                 // Create OrderItems
                 foreach ($productsToAttach as $product) {
                     $quantity = rand(1, 3);
-                    $totalAmount += $quantity * $product->price;
+                    $totalPrice += $quantity * $product->price;
                     $order->items()->create([
                         'product_id' => $product->id,
                         'quantity' => $quantity,
@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
                 }
 
                 // Update order total and payment status
-                $order->total_price = $totalAmount;
+                $order->total_price = $totalPrice;
                 $order->payment_status = 'paid';
                 $order->save();
 
